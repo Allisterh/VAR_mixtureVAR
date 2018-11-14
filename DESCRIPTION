@@ -1,0 +1,27 @@
+Package: mixtureVAR
+Type: Package
+Title: mixtureVAR
+Version: 0.4
+Authors@R: c( person("Matthias", "Nöckel", role = c("aut", "cre"), email =
+    "noeckel@uni-trier.de"), person("Jan Pablo", "Burgard", role = c("aut",
+    "cre"), email = "burgardj@uni-trier.de") )
+Author: Matthias Nöckel and Jan Pablo Burgard, with contributions from Matthias
+    Neuenkirch
+Maintainer: Jan Pablo Burgard <burgardj@uni-trier.de>
+Description: \code{mixtureVAR} estimates a finite mixture of several VAR(p) models.
+License: GPL (>= 2)
+Depends:
+    R (>= 1.8.0),
+    tsDyn,
+    gtools,
+    vars,
+    abind,
+    lattice,
+    latticeExtra,
+    nnet,
+    writexl
+Suggests:
+    maxLik
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.0
