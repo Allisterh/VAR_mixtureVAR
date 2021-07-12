@@ -92,14 +92,15 @@ Boot_mixtureVAR <- function(mod,nboot=499,eps=1e-8)
 #' @param n.ahead timepoint ahead for the irf
 #' @param bands lower and upper quantile to be displayed
 #' @param type type of plot used
+#' @param cumulative TRUE/FALSE Should cumulative irf be produced
 #'
 #' @export
 plotBootIrf <- function(BOOTAUD,mod,impulse,response="all",n.ahead=20,
                         bands=c(0.05,0.95),type=c("mean","median","both","p-value"),
-                        relation="same", grey=FALSE,modnames=NULL){
+                        relation="same", grey=FALSE,modnames=NULL, cumulative=FALSE){
   if(length(bands)>2) stop("bands must have length 2: lower and upper quantile for band")
   if(!impulse%in%rownames(mod$Theta[[1]])) stop("impulse must be a variable of the model")
-  mod1irf  <- irf(mod,n.ahead=n.ahead)
+  mod1irf  <- irf(mod,n.ahead=n.ahead,cumulative=cumulative)
   mod1irfmat<-abind(do.call(mapply,
                             args = list(FUN=abind,SIMPLIFY=FALSE,along=3,mod1irf[[1]])),along=4)
   if(!is.null(modnames) & length(modnames)==dim(mod1irfmat)[4])
@@ -113,7 +114,7 @@ plotBootIrf <- function(BOOTAUD,mod,impulse,response="all",n.ahead=20,
                                svariable = dimnames(mod1irfmat)[[3]],
                                model = c(modnames,"difference"))
 
-  BOOTIRF      <- lapply(BOOTAUD,irf,n.ahead=n.ahead)
+  BOOTIRF      <- lapply(BOOTAUD,irf,n.ahead=n.ahead,cumulative=cumulative)
   BOOTIRF2     <- t(lapply(BOOTIRF,"[[",1))
   BOOTIRFfinal <- abind(lapply(1:length(BOOTIRF2[[1]]),function(i)
     abind(do.call(mapply,
